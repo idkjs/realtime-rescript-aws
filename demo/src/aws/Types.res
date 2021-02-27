@@ -8,7 +8,7 @@ type graphqlOperation = {
   variables: option<Js.Json.t>,
 }
 
-type operation = graphqlOperation => Js.Promise.t<executionResult>
+// type operation = graphqlOperation => Js.Promise.t<executionResult>
 
 type onCreateMessage = {
   __typename: string,
@@ -20,18 +20,18 @@ and value = {data: onCreateMessage}
 
 type errorValue = {message: string}
 
-type observerLike<'event> = {
+type observerLike = {
   next: event => unit,
   error: errorValue => unit,
   complete: unit => unit,
 }
 
-type observableLike<'value> = {
-  subscribe: observerLike<'value> => {@bs.meth "unsubscribe": unit => unit},
+type observableLike = {
+  subscribe: observerLike => {@bs.meth "unsubscribe": unit => unit},
 }
 
-type message = {
-  id: option<string>,
-  message: string,
-  createdAt: option<string>,
-}
+// type message = {
+//   id: option<string>,
+//   message: string,
+//   createdAt: option<string>,
+// }

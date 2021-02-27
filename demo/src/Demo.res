@@ -1,9 +1,10 @@
-open Utils
+// open Utils
 %%raw(`import './App.css';`)
 %%raw(`require('bootstrap/dist/css/bootstrap.min.css')`)
 Amplify.configure(AwsExports.config)
 API.configure(AwsExports.config)
 @bs.module("./logo.svg") external logo: string = "default"
+let getInputValue = (e): string => ReactEvent.Form.target(e)["value"]
 @react.component
 let make = () => {
   let (message, setMessage) = React.useState(() => None)
@@ -37,8 +38,8 @@ let make = () => {
   }
 
   React.useEffect(() => {
-    let variables: OnCreateMessage.t_variables = OnCreateMessage.makeDefaultVariables()
-    let variables = OnCreateMessage.serializeVariables(variables)
+    // let variables: OnCreateMessage.t_variables = OnCreateMessage.makeDefaultVariables()
+    let variables = OnCreateMessage.serializeVariables(OnCreateMessage.makeDefaultVariables())
     let graphqlOperation: Types.graphqlOperation = {
       query: OnCreateMessage.query,
       variables: Some(variables->OnCreateMessage.variablesToJson),
