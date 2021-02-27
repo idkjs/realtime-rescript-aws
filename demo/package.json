@@ -1,0 +1,51 @@
+{
+    "name": "demo",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@glennsl/bs-jest": "^0.6.0",
+        "@testing-library/jest-dom": "^5.11.6",
+        "@testing-library/react": "^11.2.2",
+        "@testing-library/user-event": "^12.2.2",
+        "bs-react-testing-library": "^0.8.0",
+        "npm-run-all": "^4.1.5",
+        "react": "^0.0.0-experimental-0cf9fc10b",
+        "react-dom": "^0.0.0-experimental-0cf9fc10b",
+        "react-scripts": "^4.0.1",
+        "web-vitals": "^1.0.1",
+        "@aws-amplify/api": "3.2.24",
+        "@aws-amplify/core": "3.8.16",
+        "@aws-amplify/pubsub": "3.2.22",
+        "@rescript/react": "^0.10.1",
+        "bootstrap": "4.6.0",
+        "bs-platform": "^9.0.1",
+        "gentype": "^3.44.0",
+        "wonka": "5.0.0-rc.1"
+    },
+    "devDependencies": {
+        "postinstall-postinstall": "^2.1.0",
+        "@reasonml-community/graphql-ppx": "^1.0.2",
+        "patch-package": "^6.3.1"
+    },
+    "scripts": {
+        "start": "run-p start:*",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject",
+        "postinstall": "patch-package",
+        "clean": "bsb -clean-world",
+        "start:re": "bsb -make-world -w",
+        "start:cra": "react-scripts start",
+        "prebuild": "bsb -clean-world -make-world",
+        "schema": "cp src/graphql/schema.json graphql_schema.json"
+    },
+    "eslintConfig": null,
+    "browserslist": {
+        "production": [ ">0.2%", "not dead", "not op_mini all" ],
+        "development": [ "last 1 chrome version", "last 1 firefox version", "last 1 safari version" ]
+    },
+    "resolutions": {
+        "react": "0.0.0-experimental-4ead6b530",
+        "react-dom": "0.0.0-experimental-4ead6b530"
+    }
+}

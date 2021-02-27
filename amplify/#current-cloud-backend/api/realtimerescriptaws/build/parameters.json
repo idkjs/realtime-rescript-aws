@@ -1,0 +1,8 @@
+{
+    "CreateAPIKey": 1,
+    "AppSyncApiName": "realtimerescriptaws",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "S3DeploymentBucket": "amplify-realtimerescriptaws-dev-143309-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/6686cb7c098e985efb392e61a831af101318d603"
+}

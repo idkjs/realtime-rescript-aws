@@ -1,0 +1,24 @@
+{
+    "name": "rescript-aws",
+    "reason": {
+        "react-jsx": 3
+    },
+    "sources": {
+        "dir": "src",
+        "subdirs": true
+    },
+    "bsc-flags": [ "-bs-super-errors", "-bs-no-version-header" ],
+    "package-specs": [
+        {
+            "module": "es6",
+            "in-source": true
+        }
+    ],
+    "suffix": ".bs.js",
+    "namespace": true,
+    "bs-dependencies": [ "@rescript/react", "@reasonml-community/graphql-ppx", "wonka" ],
+    "ppx-flags": [ [ "@reasonml-community/graphql-ppx/ppx" ] ],
+    "warnings": { "number": "-30-45" },
+    "bs-dev-dependencies": [],
+    "refmt": 3
+}
