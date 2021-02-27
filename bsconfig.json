@@ -1,8 +1,6 @@
 {
   "name": "app",
-  "reason": {
-    "react-jsx": 3
-  },
+  "reason": { "react-jsx": 3 },
   "suffix": ".bs.js",
   "sources": {
     "dir" : "src",
@@ -18,9 +16,8 @@
       "in-source": true
     }
   ],
-  "bs-dependencies": [
-    "@rescript/react"
-  ],
+  "bs-dependencies": ["@rescript/react","@reasonml-community/graphql-ppx", "wonka"],
+  "ppx-flags": [ "@reasonml-community/graphql-ppx/ppx" ],
   "bs-dev-dependencies": [
   ],
   "refmt": 3
