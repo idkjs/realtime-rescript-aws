@@ -1,5 +1,5 @@
 let \">>=" = Belt.Option.flatMap
-
+// http://jobjo.github.io/2019/04/24/ocaml-has-some-new-shiny-syntax.html
 let decode = json => {
   open Belt.Option
   open Js.Json
