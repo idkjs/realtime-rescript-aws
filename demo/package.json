@@ -2,6 +2,7 @@
     "name": "demo",
     "version": "0.1.0",
     "private": true,
+    "type": "module",
     "dependencies": {
         "@aws-amplify/api": "3.2.24",
         "@aws-amplify/core": "3.8.16",

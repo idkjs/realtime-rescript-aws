@@ -11,13 +11,19 @@ let configure = config => {
   configureApi(api, config)
   configurePubSub(pubsub, config)
 }
+type observerLike<'event> = {
+  next: 'event => unit,
+  error: 'event => unit,
+  complete: unit => unit,
+};
+@bs.val
+external jsonStringify: ('a, Js.Nullable.t<unit>, int) => string =
+  "JSON.stringify";
 /* this is unused because I haven't figured out how to use it yet, but a cleaner version of this code will use it. */
-// let listener: Types.observerLike<'event> = {
+// let listener: observerLike<'event> = {
 //   next: event => {
-//     Js.log2("Subscription: ", Utils.jsonStringify(event.value.data, Js.Nullable.null, 2))
-//     Js.log2("EVENT: ", Utils.jsonStringify(event, Js.Nullable.null, 2))
-//     let message = event.value.data.message
-//     Js.log2("MESSAGE: ", Utils.jsonStringify(message, Js.Nullable.null, 2))
+//     Js.log2("Subscription: ", event)
+//     Js.log2("EVENT: ", jsonStringify(event, Js.Nullable.null, 2))
 //   },
 //   error: errorValue => Js.log(errorValue),
 //   complete: _ => Js.log("COMPLETE"),
@@ -29,7 +35,7 @@ let configure = config => {
    [@bs.module "@aws-amplify/pubsub"] external pubsub: t = "default"; */
 
 @bs.send
-external graphql: (t, Types.graphqlOperation) => Js.Promise.t<Types.executionResult> = "graphql"
+external graphql: (t, Types.graphqlOperation) => Js.Promise.t<observerLike<Types.executionResult>> = "graphql"
 
 // let mutate: Types.operation = graphqlOperation => graphql(api, graphqlOperation)
 let mutate = graphqlOperation => graphql(api, graphqlOperation)
@@ -41,7 +47,7 @@ let mutate = graphqlOperation => graphql(api, graphqlOperation)
 external _subscribe: (
   t,
   Types.graphqlOperation,
-) => Wonka_observable.observableT<Types.observableLike> = "graphql"
+) => Wonka_observable.observableT<Types.observableLike<'event>> = "graphql"
 let subscribe = graphqlOperation => _subscribe(api, graphqlOperation)
 let subscribeToObservable = graphqlOperation =>
   _subscribe(api, graphqlOperation) |> Wonka.fromObservable
@@ -52,11 +58,24 @@ let extractMessageFrom = event => {
   let message = event["value"]["data"]["onCreateMessage"]["message"]
   message
 }
+
+let listener: observerLike<'event> = {
+  next: event => {
+    Js.log2("Subscription: ", event)
+    Js.log2("EVENT: ", extractMessageFrom(event))
+  },
+  error: errorValue => Js.log(errorValue),
+  complete: _ => Js.log("COMPLETE"),
+}
 /* setting up like this returns the message on which we can call `setMessage()` */
 let subscribeToMessage = graphqlOperation =>
   _subscribe(api, graphqlOperation)
   |> Wonka.fromObservable
-  |> Wonka.map((. event) => extractMessageFrom(event))
+  |> Wonka.map((. event) => extractMessageFrom(event));
 
-let subscribeToMessage2 = graphqlOperation =>
-  _subscribe(api, graphqlOperation) |> Wonka.fromObservable
+let subscribeToMessageOps = graphqlOperation =>
+  _subscribe(api, graphqlOperation)
+  |> Wonka.fromObservable
+  |> Wonka.map((. listener) => listener)
+// let subscribeToMessage2 = graphqlOperation =>
+//   _subscribe(api, graphqlOperation) |> Wonka.fromObservable

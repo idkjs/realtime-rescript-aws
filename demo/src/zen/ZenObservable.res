@@ -17,6 +17,7 @@ module Subscription = {
 /* }; */
 module SubscriptionObserver = {
   type t<'a>
+  @bs.send.pipe(: t<'a>) external start: Subscription.t => 'b = "start"
   @bs.send.pipe(: t<'a>) external closed: bool = "closed"
   @bs.send.pipe(: t<'a>) external next: 'a => unit = "next"
   @bs.send.pipe(: t<'a>) external error: 'b => unit = "error"
@@ -24,20 +25,19 @@ module SubscriptionObserver = {
 }
 
 /* Making a new observable */
-@bs.module @bs.new
-external _make: ((SubscriptionObserver.t<'a>, unit) => unit) => t<'a> =
-  "zen-observable"
+@module @new
+external _make: ((SubscriptionObserver.t<'a>, unit) => unit) => t<'a> = "zen-observable"
 
 let make = f => _make(f)
 
 /* Functions that coerce to the observable type */
-@bs.module("zen-observable")
-external _of_observable: t<'a> => t<'a> = "from"
+@module("zen-observable")
+external _of_observable: t<'a> => t<'a> = "of"
 
-@bs.module("zen-observable")
+@module("zen-observable")
 external _of_observable_like: observableLike<'a> => t<'a> = "from"
 
-@bs.module("zen-observable")
+@module("zen-observable")
 external _of_array: array<'a> => t<'a> = "from"
 
 let of_observable = x => _of_observable(x)
@@ -50,8 +50,7 @@ let of_list = x => x |> Array.of_list |> _of_array
 
 /* Functions on the observable */
 @bs.send.pipe(: t<'a>)
-external subscribe: ('a => unit, 'b => unit, unit => unit) => Subscription.t =
-  "subscribe"
+external subscribe: ('a => unit, 'b => unit, unit => unit) => Subscription.t = "subscribe"
 
 @bs.send.pipe(: t<'a>)
 external forEach: ('a => unit) => Js.Promise.t<unit> = "forEach"

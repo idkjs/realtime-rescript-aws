@@ -14,6 +14,15 @@
             "in-source": true
         }
     ],
+    "gentypeconfig": {
+        "language": "untyped",
+        "module": "commonjs",
+        "importPath": "relative",
+        "debug": {
+            "all": false
+        },
+        "exportInterfaces": false
+    },
     "suffix": ".bs.js",
     "namespace": true,
     "bs-dependencies": [ "@rescript/react", "@reasonml-community/graphql-ppx", "wonka" ],

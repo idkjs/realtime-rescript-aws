@@ -20,14 +20,18 @@ and value = {data: onCreateMessage}
 
 type errorValue = {message: string}
 
-type observerLike = {
-  next: event => unit,
-  error: errorValue => unit,
+// type observerLike = {
+//   next: event => unit,
+//   error: errorValue => unit,
+//   complete: unit => unit,
+// }
+type observerLike<'event> = {
+  next: 'event => unit,
+  error: 'event => unit,
   complete: unit => unit,
-}
-
-type observableLike = {
-  subscribe: observerLike => {@bs.meth "unsubscribe": unit => unit},
+};
+type observableLike<'event> = {
+  subscribe: observerLike<'event> => {@bs.meth "unsubscribe": unit => unit},
 }
 
 // type message = {
